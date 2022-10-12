@@ -1,0 +1,115 @@
+<p style="color: green"><%= notice %></p>
+
+  <p>
+    <strong>Numero de ticket:</strong>
+    <%= "##{@ticket.id}" %>
+  </p>
+  <p>
+    <strong>Creado por: </strong>
+    <%= @user.username %>
+  </p>
+
+  <p>
+    <strong>Problem:</strong>
+    <%= @ticket.problem %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @ticket.description %>
+  </p>
+
+  <p>
+    <strong>Building:</strong>
+    <%= @building.name %>
+  </p>
+
+  <p>
+    <strong>Technical:</strong>
+    <%= @technical.name + " " + @technical.lastname  %>
+  </p>
+
+  <p>
+    <strong>Type:</strong>
+    <%= @ticket.case %>
+  </p>
+
+  <p>
+    <strong>Level:</strong>
+    <%= @ticket.level %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= @ticket.status %>
+  </p>
+
+    <strong>fecha de creación:</strong>
+    <%= @ticket.created_at.strftime("%d-%m-%Y") %>
+  </p>
+
+<div>
+  <%= link_to "Edit this ticket", edit_ticket_path(@ticket) %> |
+  <%= link_to "Back to tickets", tickets_path %>
+
+  <%= button_to "Destroy this ticket", @ticket, method: :delete %>
+</div>
+
+<% if current_user.administrator? || current_user.technical? %>
+    <%= link_to @ticket.status, edit_update_ticket_path(@ticket.id), data: {
+      turbo_method: :post
+    } %>
+<% end %>
+
+<% if current_user.administrator?  %>
+  <%= form_with model: @ticket, url: update_technical_ticket_path(@ticket.id), method: :put  do |form| %>
+    <% if @ticket.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@ticket.errors.count, "error") %></h2>
+       <ul>
+          <% @ticket.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+     <%= collection_select(:ticket,:technical_id,Technical.all,:id,:name) %>
+    </div>  
+    <div>
+      <%= form.submit "Asignar nuevo tecnico " %>
+    </div>
+  <% end %>
+<% end %>
+
+<h2>Comments</h2>
+<% @ticket.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.body %>
+  </p>
+
+  <p>
+    <strong>Comentado por:</strong>
+    <% @user = User.find(comment.user_id) %>
+
+    <%= @user.username %>
+    
+  </p>
+<% end %>
+
+<h2>Add a comment:</h2>
+<%= form_with model: [ @ticket, @ticket.comments.build ] do |form| %>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+
+
+

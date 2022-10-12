@@ -1,0 +1,15 @@
+<h1>New technical</h1>
+
+<%= render partial: "form", 
+  locals: { 
+  technical: @technical,
+  user: @user
+} %>
+
+
+
+<br>
+
+<div>
+  <%= link_to "Back to technicals", technicals_path %>
+</div>

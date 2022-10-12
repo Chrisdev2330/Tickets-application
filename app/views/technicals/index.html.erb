@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Technicals</h1>
+
+<div id="technicals">
+  <% @technicals.each do |technical| %>
+    <%= render technical %>
+    <p>
+      <%= link_to "Show this technical", technical %>
+    </p>
+  <% end %>
+</div>
+

@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @technical %>
+
+<div>
+  <%= link_to "Edit this technical", edit_technical_path(@technical) %> |
+  <%= link_to "Back to technicals", technicals_path %>
+
+  <%= button_to "Destroy this technical", @technical, method: :delete %>
+</div>
+
+<% if @technical.user.present? %>
+    <%= link_to "Ver usuario", user_path(@technical.user), 
+    data: {
+    turbo_method: :get} 
+   %>
+  <% end %>
+</div>

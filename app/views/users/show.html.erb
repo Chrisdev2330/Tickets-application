@@ -1,0 +1,22 @@
+<%= render @user %>
+
+<div>
+  <%= link_to "Edit this user", edit_user_path(@user) %> |
+  <%= link_to "Back to users", users_path %>
+
+  <%= button_to "Destroy this user", @user, method: :delete %>
+</div>
+
+<% if @user.technical? %>
+  <% if @user.technical.present? %>
+    <%= link_to "Ver Empleado", technical_path(@user.technical), data: { turbo_method: :get } %>
+  <% else %>
+    <%= link_to "Asignar un Tecnico ", new_technical_technical_path(@user) %>
+  <% end %>
+<% elsif @user.customer? %>
+  <% if @user.customer.present? %>
+    <%= link_to "Ver cliente", customer_path(@user.customer), data: { turbo_method: :get } %>
+  <% else %>
+    <%= link_to "Asignar un cliente ", new_customer_customer_path(@user) %>
+  <% end %>
+<% end %>

@@ -1,0 +1,15 @@
+<h1>customer</h1>
+
+<%= render partial: "form", 
+  locals: { 
+  customer: @customer,
+  user: @user
+} %>
+
+
+
+<br>
+
+<div>
+  <%= link_to "Back to customers", customers_path %>
+</div>
